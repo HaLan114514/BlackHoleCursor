@@ -1,0 +1,37 @@
+# ---- 构建产物（可再生成，不入库）----
+[Bb]in/
+[Oo]bj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+Thumbs.db
+
+# ---- 本地发布 / 打包产物（可再生成）----
+publish/
+docs-build/
+*.log
+
+# ---- 调试素材（截图 / 录屏，不入库）----
+bugs/
+smoke*.png
+/*.png
+/*.jpg
+
+# ---- 本地临时目录 / 工具 ----
+/.tmp-shot/
+/.tmp/
+/.publish/
+/.auth/
+/.gh-cli/
+
+# ---- 文档：只发布 Markdown，不发布 Word 文档 ----
+*.docx
+*.doc
+*.docm
+~$*
+
+# ---- dist：可执行文件走 Releases，仓库里只保留说明 ----
+dist/*
+!dist/README.md

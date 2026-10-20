@@ -1,0 +1,38 @@
+<UserControl x:Class="BlackHoleCursor.UI.Controls.SliderRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="Root">
+    <Grid Margin="0,0,0,12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="146" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="66" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0"
+                   Text="{Binding Label, ElementName=Root}"
+                   Style="{StaticResource FieldLabel}" />
+        <Slider Grid.Column="1"
+                Minimum="{Binding Minimum, ElementName=Root}"
+                Maximum="{Binding Maximum, ElementName=Root}"
+                Value="{Binding Value, ElementName=Root, Mode=TwoWay}"
+                VerticalAlignment="Center"
+                AutoToolTipPlacement="None">
+            <Slider.Style>
+                <!-- 整数滑块（如碎石数量）：吸附到整格，避免出现 8.3 个这种值 -->
+                <Style TargetType="Slider">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInteger, ElementName=Root}" Value="True">
+                            <Setter Property="IsSnapToTickEnabled" Value="True" />
+                            <Setter Property="TickFrequency" Value="1" />
+                            <Setter Property="SmallChange" Value="1" />
+                            <Setter Property="LargeChange" Value="1" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Slider.Style>
+        </Slider>
+        <TextBlock Grid.Column="2"
+                   x:Name="ValueText"
+                   Style="{StaticResource FieldValue}" />
+    </Grid>
+</UserControl>

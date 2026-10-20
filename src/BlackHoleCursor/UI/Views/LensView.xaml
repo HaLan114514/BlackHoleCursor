@@ -1,0 +1,36 @@
+<UserControl x:Class="BlackHoleCursor.UI.Views.LensView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:BlackHoleCursor.UI.Controls"
+             xmlns:core="clr-namespace:BlackHoleCursor.Core;assembly=BlackHoleCursor.Core">
+    <StackPanel>
+
+        <TextBlock Text="引力透镜" Style="{StaticResource SectionTitle}" />
+        <TextBlock Text="实时抓取鼠标周围的屏幕画面，逐像素积分光线测地线做偏折。关闭后仅保留黑洞本体。"
+                   Style="{StaticResource SectionHint}" />
+
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <controls:ToggleRow Label="启用桌面扭曲"
+                                    Description="关闭后不再抓取屏幕，性能占用最低"
+                                    IsOn="{Binding LensEnabled, Mode=TwoWay}" />
+                <TextBlock FontSize="11"
+                           Foreground="{StaticResource TextSecondary}"
+                           TextWrapping="Wrap"
+                           Text="v2 的偏折量由测地线积分算出（爱因斯坦环、镜像二次像、远场弱偏折），没有可手调的「强度 / 半径」——想改变观感请调整外观页的阴影大小与盘外径。" />
+            </StackPanel>
+        </Border>
+
+        <!-- v4：抓屏状态。扭曲好不好看，一半取决于抓屏是否正常，
+             而它原本只在主界面状态行里露过面 —— 这里才是它该待的地方。 -->
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock Text="抓屏状态" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10" />
+                <TextBlock x:Name="CaptureState" FontSize="12" Foreground="{StaticResource TextSecondary}" />
+                <TextBlock x:Name="PerfState" FontSize="12" Foreground="{StaticResource TextSecondary}" Margin="0,6,0,0" />
+                <TextBlock x:Name="StepState" FontSize="12" Foreground="{StaticResource TextSecondary}" Margin="0,6,0,0" />
+            </StackPanel>
+        </Border>
+
+    </StackPanel>
+</UserControl>

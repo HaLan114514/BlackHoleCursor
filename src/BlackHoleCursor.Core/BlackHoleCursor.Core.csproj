@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- plan-wgc W1：改为**版本化** TFM，这是上 Windows.Graphics.Capture（WGC）的前提。
+         `net8.0-windows` 不带 WinRT 互操作，WGC 的工厂 QI 会直接返回 E_NOINTERFACE。
+         代价：可引用的 Windows SDK 版本抬到 19041 ⇒ 最低系统要求从 Win10 1809 抬到 2004 一档
+         （你已确认接受，见 plan-wgc.md §2）。 -->
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>BlackHoleCursor.Core</RootNamespace>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Vortice.D3DCompiler" Version="3.8.3" />
+    <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
+    <PackageReference Include="Vortice.DirectComposition" Version="3.8.3" />
+    <PackageReference Include="Vortice.DXGI" Version="3.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\common.hlsl" LogicalName="BlackHoleCursor.Core.Shaders.common.hlsl" />
+    <EmbeddedResource Include="Shaders\lens.hlsl" LogicalName="BlackHoleCursor.Core.Shaders.lens.hlsl" />
+    <EmbeddedResource Include="Shaders\disk.hlsl" LogicalName="BlackHoleCursor.Core.Shaders.disk.hlsl" />
+    <EmbeddedResource Include="Shaders\kerr.hlsl" LogicalName="BlackHoleCursor.Core.Shaders.kerr.hlsl" />
+    <EmbeddedResource Include="Shaders\composite.hlsl" LogicalName="BlackHoleCursor.Core.Shaders.composite.hlsl" />
+  </ItemGroup>
+
+</Project>

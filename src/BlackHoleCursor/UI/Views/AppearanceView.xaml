@@ -1,0 +1,123 @@
+<UserControl x:Class="BlackHoleCursor.UI.Views.AppearanceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:BlackHoleCursor.UI.Controls"
+             xmlns:core="clr-namespace:BlackHoleCursor.Core;assembly=BlackHoleCursor.Core">
+    <StackPanel>
+
+        <TextBlock Text="外观" Style="{StaticResource SectionTitle}" />
+        <TextBlock Text="黑洞与吸积盘的造型。所有改动即时生效，可在右上角预览中查看。"
+                   Style="{StaticResource SectionHint}" />
+
+        <!-- v4（V4-1）：预设已搬到独立的「预设」页 -->
+
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock Text="大小" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10" />
+                <controls:SliderRow Label="阴影大小" ValueFormat="P1"
+                                    Minimum="{x:Static core:SettingsRanges.HoleSizeMin}"
+                                    Maximum="{x:Static core:SettingsRanges.HoleSizeMax}"
+                                    Value="{Binding HoleSize, Mode=TwoWay}" />
+                <TextBlock Text="占屏幕高度的比例。"
+                           Style="{StaticResource SectionHint}" Margin="0,-4,0,0" />
+            </StackPanel>
+        </Border>
+
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock Text="颜色" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10" />
+                <controls:SliderRow Label="最热环温度" ValueFormat="F0"
+                                    Minimum="{x:Static core:SettingsRanges.DiskTempMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskTempMax}"
+                                    Value="{Binding DiskTemp, Mode=TwoWay}" />
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="146" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="自定义染色" Style="{StaticResource FieldLabel}" />
+                    <Button Grid.Column="1" x:Name="TintColorButton" Width="92" Height="30" Click="TintColor_Click" Cursor="Hand">
+                        <Rectangle x:Name="TintSwatch" Width="76" Height="18" RadiusX="4" RadiusY="4" />
+                    </Button>
+                </Grid>
+                <controls:SliderRow Label="染色强度"
+                                    Minimum="{x:Static core:SettingsRanges.TintStrengthMin}"
+                                    Maximum="{x:Static core:SettingsRanges.TintStrengthMax}"
+                                    Value="{Binding TintStrength, Mode=TwoWay}" />
+                <TextBlock Text="温度决定黑体色（越低越红）；染色强度为 0 时是纯黑体色。"
+                           Style="{StaticResource SectionHint}" Margin="0,-4,0,0" />
+            </StackPanel>
+        </Border>
+
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock Text="盘形" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10" />
+                <controls:SliderRow Label="内径"
+                                    Minimum="{x:Static core:SettingsRanges.DiskInnerMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskInnerMax}"
+                                    Value="{Binding DiskInner, Mode=TwoWay}" />
+                <controls:SliderRow Label="外径"
+                                    Minimum="{x:Static core:SettingsRanges.DiskOuterMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskOuterMax}"
+                                    Value="{Binding DiskOuter, Mode=TwoWay}" />
+                <controls:SliderRow Label="盘倾角"
+                                    Minimum="{x:Static core:SettingsRanges.DiskInclMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskInclMax}"
+                                    Value="{Binding DiskIncl, Mode=TwoWay}" />
+                <controls:SliderRow Label="屏幕内旋转"
+                                    Minimum="{x:Static core:SettingsRanges.DiskRollMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskRollMax}"
+                                    Value="{Binding DiskRoll, Mode=TwoWay}" />
+                <controls:SliderRow Label="不透明度"
+                                    Minimum="{x:Static core:SettingsRanges.DiskOpacityMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskOpacityMax}"
+                                    Value="{Binding DiskOpacity, Mode=TwoWay}" />
+                <TextBlock Text="内外径的单位是史瓦西半径；倾角 0 正视、1.57 侧视。"
+                           Style="{StaticResource SectionHint}" Margin="0,-4,0,0" />
+            </StackPanel>
+        </Border>
+
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock Text="相对论外观" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10" />
+                <controls:SliderRow Label="多普勒混色"
+                                    Minimum="{x:Static core:SettingsRanges.DopplerMixMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DopplerMixMax}"
+                                    Value="{Binding DopplerMix, Mode=TwoWay}" />
+                <controls:SliderRow Label="集束指数"
+                                    Minimum="{x:Static core:SettingsRanges.BeamExponentMin}"
+                                    Maximum="{x:Static core:SettingsRanges.BeamExponentMax}"
+                                    Value="{Binding BeamExponent, Mode=TwoWay}" />
+                <controls:SliderRow Label="亮度增益"
+                                    Minimum="{x:Static core:SettingsRanges.DiskGainMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskGainMax}"
+                                    Value="{Binding DiskGain, Mode=TwoWay}" />
+                <controls:SliderRow Label="对比度"
+                                    Minimum="{x:Static core:SettingsRanges.DiskContrastMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskContrastMax}"
+                                    Value="{Binding DiskContrast, Mode=TwoWay}" />
+                <controls:SliderRow Label="条纹缠绕"
+                                    Minimum="{x:Static core:SettingsRanges.DiskWindingMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskWindingMax}"
+                                    Value="{Binding DiskWinding, Mode=TwoWay}" />
+                <controls:SliderRow Label="条纹速度"
+                                    Minimum="{x:Static core:SettingsRanges.DiskSpeedMin}"
+                                    Maximum="{x:Static core:SettingsRanges.DiskSpeedMax}"
+                                    Value="{Binding DiskSpeed, Mode=TwoWay}" />
+                <controls:SliderRow Label="黑洞自旋"
+                                    Minimum="{x:Static core:SettingsRanges.SpinMin}"
+                                    Maximum="{x:Static core:SettingsRanges.SpinMax}"
+                                    Value="{Binding Spin, Mode=TwoWay}" />
+                <TextBlock Text="条纹速度为负表示反向公转；自旋 0.98 已接近极值黑洞。"
+                           Style="{StaticResource SectionHint}" Margin="0,-4,0,0" />
+            </StackPanel>
+        </Border>
+
+        <!-- v4（V4-4）：「渲染」这一整块已搬到新的「渲染与性能」页（RenderView）——
+             曝光 / 星空强度 / 星云强度 / 星云色调 / 氛围流速 / 积分步数都不再在本页。
+             v4（V4-5）：其中的「引力透镜」开关是直接删除的（不是搬），
+             它与「引力透镜」页重复，唯一入口保留在 LensView。 -->
+
+    </StackPanel>
+</UserControl>

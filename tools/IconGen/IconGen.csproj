@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- System.Drawing 只在 Windows 目标下可用；这工具本来就只在 Windows 上跑 -->
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>BlackHoleCursor.Tools.IconGen</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- App 项目是靠 WPF 隐式带上 System.Drawing 的，控制台项目没有，得显式引用 -->
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 直接链接程序里那份绘制代码：图标只有一份画法，
+         否则「托盘图标」和「文件里的程序图标」迟早会长得不一样。 -->
+    <Compile Include="..\..\src\BlackHoleCursor\IconFactory.cs" Link="IconFactory.cs" />
+  </ItemGroup>
+
+</Project>

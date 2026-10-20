@@ -1,0 +1,107 @@
+<UserControl x:Class="BlackHoleCursor.UI.Views.FollowView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:BlackHoleCursor.UI.Controls"
+             xmlns:core="clr-namespace:BlackHoleCursor.Core;assembly=BlackHoleCursor.Core">
+    <StackPanel>
+
+        <TextBlock Text="惯性跟随" Style="{StaticResource SectionTitle}" />
+        <TextBlock Text="开启后黑洞不再与鼠标严格重合，而是带质量地加速追赶、平滑减速。命中点始终跟随真实鼠标，不影响点击。"
+                   Style="{StaticResource SectionHint}" />
+
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <controls:ToggleRow Label="启用惯性跟随"
+                                    Description="默认关闭；关闭时黑洞严格贴合鼠标"
+                                    IsOn="{Binding FollowEnabled, Mode=TwoWay}" />
+                <controls:SliderRow Label="刚度" Minimum="{x:Static core:SettingsRanges.FollowStiffnessMin}"
+                                    Maximum="{x:Static core:SettingsRanges.FollowStiffnessMax}"
+                                    Value="{Binding FollowStiffness, Mode=TwoWay}" />
+                <controls:SliderRow Label="阻尼" Minimum="{x:Static core:SettingsRanges.FollowDampingMin}"
+                                    Maximum="{x:Static core:SettingsRanges.FollowDampingMax}"
+                                    Value="{Binding FollowDamping, Mode=TwoWay}" />
+                <controls:SliderRow Label="最大速度" Minimum="{x:Static core:SettingsRanges.FollowMaxSpeedMin}"
+                                    Maximum="{x:Static core:SettingsRanges.FollowMaxSpeedMax}"
+                                    Value="{Binding FollowMaxSpeed, Mode=TwoWay}" />
+                <controls:SliderRow Label="最大加速度" Minimum="{x:Static core:SettingsRanges.FollowMaxAccelMin}"
+                                    Maximum="{x:Static core:SettingsRanges.FollowMaxAccelMax}"
+                                    Value="{Binding FollowMaxAccel, Mode=TwoWay}" />
+                <controls:SliderRow Label="静止吸附阈值" Minimum="{x:Static core:SettingsRanges.FollowSnapDistanceMin}"
+                                    Maximum="{x:Static core:SettingsRanges.FollowSnapDistanceMax}"
+                                    Value="{Binding FollowSnapDistance, Mode=TwoWay}" />
+                <controls:ToggleRow Label="自适应限速"
+                                    Description="距离越远限速越高，避免大跨度移动时跟随断裂"
+                                    IsOn="{Binding FollowAdaptiveSpeed, Mode=TwoWay}" />
+            </StackPanel>
+        </Border>
+
+        <TextBlock Text="静止游荡" Style="{StaticResource SectionTitle}" />
+        <TextBlock Text="鼠标静止一段时间后，黑洞在鼠标附近缓慢飘动，停久了不会显得死板。命中点始终在真实鼠标，飘动只是视觉位移。"
+                   Style="{StaticResource SectionHint}" />
+
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <controls:ToggleRow Label="启用静止游荡"
+                                    Description="默认关闭；鼠标一动立刻平滑回到鼠标位置"
+                                    IsOn="{Binding IdleWanderEnabled, Mode=TwoWay}" />
+                <controls:SliderRow Label="启动延迟" Minimum="{x:Static core:SettingsRanges.IdleWanderDelayMin}"
+                                    Maximum="{x:Static core:SettingsRanges.IdleWanderDelayMax}"
+                                    Value="{Binding IdleWanderDelay, Mode=TwoWay}" />
+                <controls:SliderRow Label="游荡半径" Minimum="{x:Static core:SettingsRanges.IdleWanderRadiusMin}"
+                                    Maximum="{x:Static core:SettingsRanges.IdleWanderRadiusMax}"
+                                    Value="{Binding IdleWanderRadius, Mode=TwoWay}" />
+                <controls:SliderRow Label="游荡快慢" Minimum="{x:Static core:SettingsRanges.IdleWanderSpeedMin}"
+                                    Maximum="{x:Static core:SettingsRanges.IdleWanderSpeedMax}"
+                                    Value="{Binding IdleWanderSpeed, Mode=TwoWay}" />
+                <TextBlock x:Name="WanderHint"
+                           FontSize="11"
+                           Foreground="{StaticResource TextSecondary}"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock Text="阻尼手感预设" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="欠阻尼（Q 弹）" Style="{StaticResource GhostButton}" Click="Underdamped_Click" Margin="0,0,10,0" />
+                    <Button Content="临界阻尼（顺滑）" Style="{StaticResource GhostButton}" Click="Critical_Click" Margin="0,0,10,0" />
+                    <Button Content="过阻尼（厚重）" Style="{StaticResource GhostButton}" Click="Overdamped_Click" />
+                </StackPanel>
+                <TextBlock x:Name="DampingHint"
+                           Margin="0,12,0,0"
+                           FontSize="11"
+                           Foreground="{StaticResource TextSecondary}"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+
+        <!-- v4：从「程序设置」页搬来 —— 出现 / 消失属于动效，跟着惯性跟随放一起才说得通。 -->
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock Text="出现 / 消失动画" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10" />
+                <controls:ToggleRow Label="启用过渡动画"
+                                    Description="开关黑洞时弹性过冲地出现 / 消失；托盘退出不播动画，保证零延迟"
+                                    IsOn="{Binding TransitionEnabled, Mode=TwoWay}" />
+                <controls:SliderRow Label="动画时长"
+                                    Minimum="{x:Static core:SettingsRanges.TransitionDurationMin}"
+                                    Maximum="{x:Static core:SettingsRanges.TransitionDurationMax}"
+                                    Value="{Binding TransitionDuration, Mode=TwoWay}" />
+                <controls:SliderRow Label="过冲峰值"
+                                    Minimum="{x:Static core:SettingsRanges.TransitionOvershootMin}"
+                                    Maximum="{x:Static core:SettingsRanges.TransitionOvershootMax}"
+                                    Value="{Binding TransitionOvershoot, Mode=TwoWay}" />
+                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                    <Button Content="重播一次" Style="{StaticResource GhostButton}" Click="ReplayTransition_Click" />
+                    <TextBlock Text="预览区常驻不播动画，用它看桌面上那一次的效果"
+                               FontSize="11"
+                               Foreground="{StaticResource TextSecondary}"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+    </StackPanel>
+</UserControl>
